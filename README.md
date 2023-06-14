@@ -22,7 +22,7 @@ func main() {
 	var msg cs2log.Message
 
 	// a line from a server logfile
-	line := `L 11/05/2018 - 15:44:36: "Player<12><STEAM_1:1:0101011><CT>" purchased "m4a1"`
+	line := `L 11/05/2018 - 15:44:36: "Player<12><[U:1:29384012]><CT>" purchased "m4a1"`
 
 	// parse into Message
 	msg, err := cs2log.Parse(line)
