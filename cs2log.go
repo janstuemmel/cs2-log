@@ -1,15 +1,11 @@
 /*
-
-Package csgolog provides utilities for parsing a csgo server logfile.
-It exports types for csgo logfiles, their regular expressions, a function
+Package cs2log provides utilities for parsing a counter-strike 2 server logfile.
+It exports types for cs2 logfiles, their regular expressions, a function
 for parsing and a function for converting to non-html-escaped JSON.
 
 Look at the examples for Parse and ToJSON for usage instructions.
-
-You will find a command-line utility in examples folder as well as an
-example logfile with ~3000 lines.
 */
-package csgolog
+package cs2log
 
 import (
 	"bytes"
@@ -360,49 +356,49 @@ const (
 	// TeamNoticePattern regular expression
 	TeamNoticePattern = `Team "(CT|TERRORIST)" triggered "(\w+)" \(CT "(\d+)"\) \(T "(\d+)"\)`
 	// PlayerConnectedPattern regular expression
-	PlayerConnectedPattern = `"(.+)<(\d+)><([\w:]+)><>" connected, address "(.*)"`
+	PlayerConnectedPattern = `"(.+)<(\d+)><([\[\]\w:]+)><>" connected, address "(.*)"`
 	// PlayerDisconnectedPattern regular expression
-	PlayerDisconnectedPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT|Unassigned|)>" disconnected \(reason "(.+)"\)`
+	PlayerDisconnectedPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT|Unassigned|)>" disconnected \(reason "(.+)"\)`
 	// PlayerEnteredPattern regular expression
-	PlayerEnteredPattern = `"(.+)<(\d+)><([\w:]+)><>" entered the game`
+	PlayerEnteredPattern = `"(.+)<(\d+)><([\[\]\w:]+)><>" entered the game`
 	// PlayerBannedPattern regular expression
-	PlayerBannedPattern = `Banid: "(.+)<(\d+)><([\w:]+)><\w*>" was banned "([\w. ]+)" by "(\w+)"`
+	PlayerBannedPattern = `Banid: "(.+)<(\d+)><([\[\]\w:]+)><\w*>" was banned "([\w. ]+)" by "(\w+)"`
 	// PlayerSwitchedPattern regular expression
-	PlayerSwitchedPattern = `"(.+)<(\d+)><([\w:]+)>" switched from team <(Unassigned|Spectator|TERRORIST|CT)> to <(Unassigned|Spectator|TERRORIST|CT)>`
+	PlayerSwitchedPattern = `"(.+)<(\d+)><([\[\]\w:]+)>" switched from team <(Unassigned|Spectator|TERRORIST|CT)> to <(Unassigned|Spectator|TERRORIST|CT)>`
 	// PlayerSayPattern regular expression
-	PlayerSayPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" say(_team)? "(.*)"`
+	PlayerSayPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" say(_team)? "(.*)"`
 	// PlayerPurchasePattern regular expression
-	PlayerPurchasePattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" purchased "(\w+)"`
+	PlayerPurchasePattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" purchased "(\w+)"`
 	// PlayerKillPattern regular expression
-	PlayerKillPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] killed "(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] with "(\w+)" ?(\(?(headshot|penetrated|headshot penetrated)?\))?`
+	PlayerKillPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] killed "(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] with "(\w+)" ?(\(?(headshot|penetrated|headshot penetrated)?\))?`
 	// PlayerKillAssistPattern regular expression
-	PlayerKillAssistPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" assisted killing "(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>"`
+	PlayerKillAssistPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" assisted killing "(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>"`
 	// PlayerAttackPattern regular expression
-	PlayerAttackPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] attacked "(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] with "(\w+)" \(damage "(\d+)"\) \(damage_armor "(\d+)"\) \(health "(\d+)"\) \(armor "(\d+)"\) \(hitgroup "([\w ]+)"\)`
+	PlayerAttackPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] attacked "(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] with "(\w+)" \(damage "(\d+)"\) \(damage_armor "(\d+)"\) \(health "(\d+)"\) \(armor "(\d+)"\) \(hitgroup "([\w ]+)"\)`
 	// PlayerKilledBombPattern regular expression
-	PlayerKilledBombPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] was killed by the bomb\.`
+	PlayerKilledBombPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] was killed by the bomb\.`
 	// PlayerKilledSuicidePattern regular expression
-	PlayerKilledSuicidePattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] committed suicide with "(.*)"`
+	PlayerKilledSuicidePattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" \[(-?\d+) (-?\d+) (-?\d+)\] committed suicide with "(.*)"`
 	// PlayerPickedUpPattern regular expression
-	PlayerPickedUpPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" picked up "(\w+)"`
+	PlayerPickedUpPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" picked up "(\w+)"`
 	// PlayerDroppedPattern regular expression
-	PlayerDroppedPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT|Unassigned)>" dropped "(\w+)"`
+	PlayerDroppedPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT|Unassigned)>" dropped "(\w+)"`
 	// PlayerMoneyChangePattern regular expression
-	PlayerMoneyChangePattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" money change (\d+)\+?(-?\d+) = \$(\d+) \(tracked\)( \(purchase: (\w+)\))?`
+	PlayerMoneyChangePattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" money change (\d+)\+?(-?\d+) = \$(\d+) \(tracked\)( \(purchase: (\w+)\))?`
 	// PlayerBombGotPattern regular expression
-	PlayerBombGotPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" triggered "Got_The_Bomb"`
+	PlayerBombGotPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" triggered "Got_The_Bomb"`
 	// PlayerBombPlantedPattern regular expression
-	PlayerBombPlantedPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" triggered "Planted_The_Bomb"`
+	PlayerBombPlantedPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" triggered "Planted_The_Bomb"`
 	// PlayerBombDroppedPattern regular expression
-	PlayerBombDroppedPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" triggered "Dropped_The_Bomb"`
+	PlayerBombDroppedPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" triggered "Dropped_The_Bomb"`
 	// PlayerBombBeginDefusePattern regular expression
-	PlayerBombBeginDefusePattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" triggered "Begin_Bomb_Defuse_With(out)?_Kit"`
+	PlayerBombBeginDefusePattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" triggered "Begin_Bomb_Defuse_With(out)?_Kit"`
 	// PlayerBombDefusedPattern regular expression
-	PlayerBombDefusedPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" triggered "Defused_The_Bomb"`
+	PlayerBombDefusedPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" triggered "Defused_The_Bomb"`
 	// PlayerThrewPattern regular expression
-	PlayerThrewPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" threw (\w+) \[(-?\d+) (-?\d+) (-?\d+)\]( flashbang entindex (\d+))?\)?`
+	PlayerThrewPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" threw (\w+) \[(-?\d+) (-?\d+) (-?\d+)\]( flashbang entindex (\d+))?\)?`
 	// PlayerBlindedPattern regular expression
-	PlayerBlindedPattern = `"(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" blinded for ([\d.]+) by "(.+)<(\d+)><([\w:]+)><(TERRORIST|CT)>" from flashbang entindex (\d+)`
+	PlayerBlindedPattern = `"(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" blinded for ([\d.]+) by "(.+)<(\d+)><([\[\]\w:]+)><(TERRORIST|CT)>" from flashbang entindex (\d+)`
 	// ProjectileSpawnedPattern regular expression
 	ProjectileSpawnedPattern = `Molotov projectile spawned at (-?\d+\.\d+) (-?\d+\.\d+) (-?\d+\.\d+), velocity (-?\d+\.\d+) (-?\d+\.\d+) (-?\d+\.\d+)`
 	// GameOverPattern regular expression
