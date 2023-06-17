@@ -1,1 +1,18 @@
+# Folders
+_obj
+_test
+vendor/
+.idea/
+
+# Dependency directories
+/!vendor
+
+# Go specific
+*.d
+*.test
+*.out
+
+# End of file marker
+# If you need to ignore any additional files or directories, add them below this line
+
 coverage.out

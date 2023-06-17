@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/janstuemmel/csgo-log"
+	cs2log "github.com/janstuemmel/csgo-log"
 )
 
 // Usage:
@@ -46,14 +46,14 @@ func main() {
 	for err == nil {
 
 		// parse
-		m, errParse := csgolog.Parse(string(l))
+		m, errParse := cs2log.Parse(string(l))
 
 		if errParse != nil {
 			// print parse errors to stderr
-			fmt.Fprintf(os.Stderr, "ERROR: %s", csgolog.ToJSON(m))
+			fmt.Fprintf(os.Stderr, "ERROR: %s", cs2log.ToJSON(m))
 		} else {
 			// print to stdout
-			fmt.Fprintf(os.Stdout, "%s", csgolog.ToJSON(m))
+			fmt.Fprintf(os.Stdout, "%s", cs2log.ToJSON(m))
 		}
 
 		// next line
