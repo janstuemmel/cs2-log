@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	cs2log "github.com/janstuemmel/cs2-log"
+	"github.com/janstuemmel/cs2-log"
 )
 
 func exampleParse() {
