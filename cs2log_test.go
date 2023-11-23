@@ -3,7 +3,6 @@ package cs2log_test
 import (
 	"fmt"
 	"regexp"
-	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -1054,31 +1053,6 @@ func TestParse(t *testing.T) {
 	})
 }
 
-func TestHelpers(t *testing.T) {
-
-	t.Run("toInt", func(t *testing.T) {
-
-		// when
-		i1 := toInt("1337")
-		i2 := toInt("hello")
-
-		// then
-		assert(t, 1337, i1)
-		assert(t, 0, i2)
-	})
-
-	t.Run("toFloat", func(t *testing.T) {
-
-		// when
-		f1 := toFloat32("1337.1337")
-		f2 := toFloat32("hello")
-
-		// then
-		assert(t, float32(1337.1337), f1)
-		assert(t, float32(0), f2)
-	})
-}
-
 func BenchmarkFirstEntry(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		// best case: type match steart
@@ -1120,29 +1094,4 @@ func strip(s string) string {
 	s = strings.Replace(s, "\n", "", -1)
 	s = strings.Replace(s, "\t", "", -1)
 	return strings.Replace(s, " ", "", -1)
-}
-
-// helpers
-
-// toInt converts string to int, assigns 0 when not convertable
-func toInt(v string) int {
-
-	i, err := strconv.Atoi(v)
-
-	if err != nil {
-		return 0
-	}
-
-	return i
-}
-
-func toFloat32(v string) float32 {
-
-	i, err := strconv.ParseFloat(v, 32)
-
-	if err != nil {
-		return float32(0)
-	}
-
-	return float32(i)
 }
