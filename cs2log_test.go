@@ -2,15 +2,16 @@ package cs2log_test
 
 import (
 	"fmt"
+	"reflect"
 	"regexp"
 	"strings"
 	"testing"
 	"time"
 
-	"github.com/janstuemmel/cs2-log"
+	cs2log "github.com/janstuemmel/cs2-log"
 )
 
-func exampleParse() {
+func ExampleParse() {
 
 	var msg cs2log.Message
 
@@ -27,7 +28,7 @@ func exampleParse() {
 	// 2018-11-05 15:44:36 +0000 UTC
 }
 
-func exampleToJSON() {
+func ExampleToJSON() {
 
 	// parse Message
 	msg, _ := cs2log.Parse(`L 11/05/2018 - 15:44:36: "Player-Name<12><[U:1:29384012]><CT>" purchased "m4a1"`)
@@ -1085,7 +1086,7 @@ func assert(t *testing.T, want interface{}, have interface{}) {
 	// mark as test helper function
 	t.Helper()
 
-	if want != have {
+	if !reflect.DeepEqual(want, have) {
 		t.Error("Assertion failed for", t.Name(), "\n\twanted:\t", want, "\n\thave:\t", have)
 	}
 }
